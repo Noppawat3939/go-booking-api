@@ -12,7 +12,7 @@ import (
 
 var DB *gorm.DB
 
-func Connect() {
+func Connect() error {
 	host := os.Getenv("DB_HOST")
 	user := os.Getenv("DB_USER")
 	password := os.Getenv("DB_PASSWORD")
@@ -25,16 +25,18 @@ func Connect() {
 	)
 
 	var err error
-	DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatal("❌ Failed connect database:", err)
 	}
 
-	err = DB.AutoMigrate(&models.User{}, &models.Hotel{}, &models.HotelFacility{}, &models.BookingHotel{})
+	err = models.MigrateDB(db)
 
 	if err != nil {
 		log.Fatalf("Failed migrate database %v", err)
 	}
 
 	fmt.Println("✅ Connected database successfully")
+	DB = db
+	return nil
 }

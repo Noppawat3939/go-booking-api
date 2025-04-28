@@ -3,6 +3,7 @@ package main
 import (
 	"go_booking/cmd/config"
 	"go_booking/internal/db"
+	"go_booking/internal/routes"
 	"log"
 	"os"
 
@@ -13,7 +14,11 @@ func main() {
 	config.LoadEnv()
 
 	db.Connect()
+
 	app := fiber.New()
+
+	routes.InitialRoutes(app)
+
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("Hello world GO booking")
 	})
