@@ -1,11 +1,15 @@
 package hotels
 
+import "time"
+
 type Hotel struct {
-	ID          int
-	Name        string
-	Description string
-	Type        string
-	Price       float64
-	RoomsQty    float32
-	Active      bool
+	ID          uint      `gorm:"primaryKey"`
+	Name        string    `gorm:"not null"`
+	Description string    `gorm:"default:null"`
+	Type        string    `gorm:"default:null"`
+	Price       float64   `gorm:"not null"`
+	RoomsQty    int       `gorm:"not null"`
+	Active      bool      `gorm:"default:true"`
+	CreatedAt   time.Time `gorm:"default:current_timestamp"`
+	UpdatedUp   time.Time `gorm:"default:current_timestamp"`
 }

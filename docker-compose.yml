@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres
+    container_name: go-booking-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: go_booking_api
+      POSTGRES_DB: go_booking
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - go-booking-network
+
+  api:
+    build: .
+    container_name: go-booking-api
+    ports:
+      - "8081:8080"
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_USER: postgres
+      DB_PASSWORD: go_booking_api
+      DB_NAME: go_booking
+      DB_PORT: 5432
+    networks:
+      - go-booking-network
+
+volumes:
+  postgres_data:
+
+networks:
+  go-booking-network:
