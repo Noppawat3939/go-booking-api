@@ -1,4 +1,4 @@
-package hotels
+package models
 
 import "time"
 
@@ -12,4 +12,12 @@ type Hotel struct {
 	Active      bool      `gorm:"default:true"`
 	CreatedAt   time.Time `gorm:"default:current_timestamp"`
 	UpdatedUp   time.Time `gorm:"default:current_timestamp"`
+}
+
+type HotelFacility struct {
+	ID        uint `gorm:"primaryKey"`
+	HotelID   int
+	Wifi      bool  `gorm:"default:false"`
+	BreakFast bool  `gorm:"default:false"`
+	Hotel     Hotel `gorm:"foreignkey:HotelID;association_foreignkey:ID"`
 }

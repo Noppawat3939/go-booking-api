@@ -2,9 +2,7 @@ package db
 
 import (
 	"fmt"
-	"go_booking/internal/bookings"
-	"go_booking/internal/hotels"
-	"go_booking/internal/users"
+	"go_booking/internal/models"
 	"log"
 	"os"
 
@@ -32,7 +30,7 @@ func Connect() {
 		log.Fatal("❌ Failed connect database:", err)
 	}
 
-	err = DB.AutoMigrate(&users.User{}, &hotels.Hotel{}, &hotels.HotelFacility{}, &bookings.BookingHotel{})
+	err = DB.AutoMigrate(&models.User{}, &models.Hotel{}, &models.HotelFacility{}, &models.BookingHotel{})
 
 	if err != nil {
 		log.Fatalf("Failed migrate database %v", err)
