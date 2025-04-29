@@ -2,6 +2,7 @@ Table users {
 id integer [primary key]
 username text
 role text [note: 'admin , null']
+password text
 active bool
 created_at timestamp
 updated_at timestamp

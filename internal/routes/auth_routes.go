@@ -9,12 +9,13 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func UserRoutes(router fiber.Router) {
+func AuthRoutes(router fiber.Router) {
 	repo := repositories.NewUserRepository(db.DB)
-	service := services.NewUserService(repo)
-	handler := handlers.NewUserHanlder(service)
+	service := services.NewAuthService(repo)
+	handler := handlers.NewAuthHandler(service)
 
-	r := router.Group("user")
+	r := router.Group("auth")
 
-	r.Get("/", handler.GetUsers)
+	r.Post("/login", handler.LoginUser)
+	r.Post("/register", handler.RegisterUser)
 }
