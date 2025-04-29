@@ -1,7 +1,6 @@
 package services
 
 import (
-	"errors"
 	"go_booking/internal/models"
 	"go_booking/internal/repositories"
 )
@@ -15,12 +14,6 @@ func NewUserService(r *repositories.UserRepository) *UserService {
 }
 
 func (s *UserService) CreateUser(user *models.User) error {
-	exit, err := s.repo.FindByUsername(user.Username)
-
-	if err != nil && exit != nil {
-		return errors.New("username already exits")
-	}
-
 	return s.repo.CreateUser(user)
 }
 

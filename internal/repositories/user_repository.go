@@ -1,6 +1,7 @@
 package repositories
 
 import (
+	"errors"
 	"go_booking/internal/models"
 
 	"gorm.io/gorm"
@@ -15,7 +16,8 @@ func NewUserRepository(db *gorm.DB) *UserRepository {
 }
 
 func (r *UserRepository) CreateUser(user *models.User) error {
-	return r.db.Create(user).Error
+	res := r.db.Create(user)
+	return res.Error
 }
 
 func (r *UserRepository) FindAll() ([]models.User, error) {
@@ -35,8 +37,14 @@ func (r *UserRepository) FindByID(id uint) (*models.User, error) {
 func (r *UserRepository) FindByUsername(username string) (*models.User, error) {
 	var user models.User
 
-	err := r.db.First(&user, username).Error
-	return &user, err
+	err := r.db.Where("username = ?", username).First(&user).Error
+
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		return nil, err
+	}
+
+	return &user, nil
+
 }
 
 func (r *UserRepository) FindOne(username string, role string) (*models.User, error) {
