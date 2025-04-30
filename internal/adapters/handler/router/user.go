@@ -12,7 +12,7 @@ import (
 func UserRouter(router fiber.Router, db *gorm.DB) {
 	// injected user
 	userRepo := repository.NewUserRepository(db)
-	userService := service.NewUserService1(userRepo)
+	userService := service.NewUserService(userRepo)
 	userHandler := http.NewUserHandler(userService)
 
 	r := router.Group("/user")
