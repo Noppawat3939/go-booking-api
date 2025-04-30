@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"go_booking/internal/core/user"
+	"go_booking/internal/core/domain"
 
 	"gorm.io/gorm"
 )
@@ -14,6 +14,6 @@ func NewUserRepository(db *gorm.DB) *UserRepository {
 	return &UserRepository{db}
 }
 
-func (r *UserRepository) Create(u *user.User) error {
-	return r.db.Create(u).Error
+func (ur *UserRepository) CreateUser(u *domain.User) error {
+	return ur.db.Create(u).Error
 }

@@ -1,6 +1,8 @@
 module go_booking
 
-go 1.22.5
+go 1.23.0
+
+toolchain go1.24.2
 
 require gorm.io/gorm v1.26.0
 
@@ -10,8 +12,8 @@ require (
 	github.com/jackc/pgx/v5 v5.5.5 // indirect
 	github.com/jackc/puddle/v2 v2.2.1 // indirect
 	github.com/joho/godotenv v1.5.1 // indirect
-	golang.org/x/crypto v0.17.0 // indirect
-	golang.org/x/sync v0.9.0 // indirect
+	golang.org/x/crypto v0.37.0 // indirect
+	golang.org/x/sync v0.13.0 // indirect
 )
 
 require (
@@ -28,7 +30,7 @@ require (
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.51.0 // indirect
 	github.com/valyala/tcplisten v1.0.0 // indirect
-	golang.org/x/sys v0.28.0 // indirect
-	golang.org/x/text v0.20.0 // indirect
+	golang.org/x/sys v0.32.0 // indirect
+	golang.org/x/text v0.24.0 // indirect
 	gorm.io/driver/postgres v1.5.11
 )

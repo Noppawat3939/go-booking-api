@@ -1,4 +1,4 @@
-package user
+package domain
 
 import "gorm.io/gorm"
 
@@ -8,8 +8,4 @@ type User struct {
 	Password string `gorm:"not null"`
 	Role     string `gorm:"default:null"`
 	Active   bool   `gorm:"default:true"`
-}
-
-type Repository interface {
-	Create(user *User) error
 }
