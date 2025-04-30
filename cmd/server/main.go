@@ -2,8 +2,9 @@ package main
 
 import (
 	"go_booking/cmd/config"
+	"go_booking/internal/adapters/http/routes"
 	"go_booking/internal/db"
-	"go_booking/internal/routes"
+
 	"log"
 	"os"
 
@@ -12,11 +13,11 @@ import (
 
 func main() {
 	config.LoadEnv()
-	db.Connect()
+	db, _ := db.ConnectDB()
 
 	app := fiber.New()
 
-	routes.InitialRoutes(app)
+	routes.SetupRouter(app, db)
 
 	port := os.Getenv("PORT")
 

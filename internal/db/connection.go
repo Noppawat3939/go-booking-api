@@ -2,7 +2,6 @@ package db
 
 import (
 	"fmt"
-	"go_booking/internal/models"
 	"log"
 	"os"
 
@@ -12,7 +11,7 @@ import (
 
 var DB *gorm.DB
 
-func Connect() error {
+func ConnectDB() (*gorm.DB, error) {
 	host := os.Getenv("DB_HOST")
 	user := os.Getenv("DB_USER")
 	password := os.Getenv("DB_PASSWORD")
@@ -30,7 +29,7 @@ func Connect() error {
 		log.Fatal("❌ Failed connect database:", err)
 	}
 
-	err = models.MigrateDB(db)
+	err = MigrateDB(db)
 
 	if err != nil {
 		log.Fatalf("Failed migrate database %v", err)
@@ -38,5 +37,5 @@ func Connect() error {
 
 	fmt.Println("✅ Connected database successfully")
 	DB = db
-	return nil
+	return DB, nil
 }
