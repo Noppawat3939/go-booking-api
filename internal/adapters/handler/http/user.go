@@ -37,7 +37,3 @@ func (uh *UserHandler) Register(c *fiber.Ctx) error {
 
 	return SuccessResponse(c, "create new user", rsp)
 }
-
-func (h *UserHandler) FindByUsername(username string) (*domain.User, error) {
-	return nil, nil
-}

@@ -11,8 +11,11 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func main() {
+func init() {
 	config.LoadEnv()
+}
+
+func main() {
 	db, _ := db.ConnectDB()
 
 	app := fiber.New()

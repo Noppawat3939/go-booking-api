@@ -6,8 +6,9 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-type UserRepositoyry interface {
+type UserRepository interface {
 	CreateUser(user *domain.User) error
+	FindByUsername(username string) (*domain.User, error)
 }
 
 type UserService interface {
