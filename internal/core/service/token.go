@@ -3,6 +3,8 @@ package service
 import (
 	"go_booking/internal/core/domain"
 	"go_booking/internal/core/util"
+
+	"github.com/golang-jwt/jwt/v5"
 )
 
 type JWTService struct{}
@@ -21,6 +23,6 @@ func (s *JWTService) CreateToken(user *domain.User) (string, error) {
 	return util.CreateToken(tokenPayload, 3)
 }
 
-func (s *JWTService) VerifyToken(token string) (bool, error) {
+func (s *JWTService) VerifyToken(token string) (bool, jwt.MapClaims, error) {
 	return util.VerifyToken(token)
 }

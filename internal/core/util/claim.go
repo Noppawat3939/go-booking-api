@@ -23,13 +23,16 @@ func CreateToken(payload map[string]interface{}, exp int) (string, error) {
 	return tokenString, nil
 }
 
-func VerifyToken(tokenString string) (bool, error) {
+func VerifyToken(tokenString string) (bool, jwt.MapClaims, error) {
 	token, err := jwt.Parse(tokenString, func(t *jwt.Token) (interface{}, error) {
 		return []byte(secretKey), nil
 	})
 	if err != nil {
-		return false, err
+		return false, nil, err
+	}
+	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+		return true, claims, nil
 	}
 
-	return token.Valid, nil
+	return token.Valid, nil, nil
 }
