@@ -2,6 +2,7 @@ package router
 
 import (
 	"go_booking/internal/adapters/handler/http"
+	"go_booking/internal/adapters/handler/http/middleware"
 	"go_booking/internal/adapters/repository"
 	"go_booking/internal/core/service"
 
@@ -11,13 +12,17 @@ import (
 
 func HotelRouter(router fiber.Router, db *gorm.DB) {
 	// initialized Hotel
-	repo := repository.NewHotelRepository(db)
-	service := service.NewHotelService(repo)
-	handler := http.NewHotelHandler(service)
+	hotelRepo := repository.NewHotelRepository(db)
+	hotelService := service.NewHotelService(hotelRepo)
+	hotelHandler := http.NewHotelHandler(hotelService)
+
+	tokenService := service.NewTokenService()
 
 	r := router.Group("/hotel")
 
-	r.Post("/", handler.CreateHotel)
-	r.Get("/", handler.GetHotels)
-	r.Get("/:id", handler.GetHotel)
+	r.Use(middleware.JwtMiddleware(tokenService))
+
+	r.Post("/", hotelHandler.CreateHotel)
+	r.Get("/", hotelHandler.GetHotels)
+	r.Get("/:id", hotelHandler.GetHotel)
 }

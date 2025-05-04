@@ -20,3 +20,7 @@ func (s *JWTService) CreateToken(user *domain.User) (string, error) {
 
 	return util.CreateToken(tokenPayload, 3)
 }
+
+func (s *JWTService) VerifyToken(token string) (bool, error) {
+	return util.VerifyToken(token)
+}

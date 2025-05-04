@@ -21,3 +21,15 @@ func CreateToken(payload map[string]interface{}, exp int) (string, error) {
 
 	return tokenString, nil
 }
+
+func VerifyToken(tokenString string) (bool, error) {
+	secretKey := os.Getenv("JWT_SECRET")
+	token, err := jwt.Parse(tokenString, func(t *jwt.Token) (interface{}, error) {
+		return []byte(secretKey), nil
+	})
+	if err != nil {
+		return false, err
+	}
+
+	return token.Valid, nil
+}
