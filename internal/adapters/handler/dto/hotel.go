@@ -23,10 +23,10 @@ type Hotel struct {
 
 type CreateHotelRequest struct {
 	Hotel
-	ID        int       `json:"-"` //omit id
-	CreatedAt time.Time `json:"-"` // omit created_at
-	UpdatedAt time.Time `json:"-"` // omit updated_at
-	DeletedAt time.Time `json:"-"` // omit deleted_at
+	ID        int       `json:"-"` //omit
+	CreatedAt time.Time `json:"-"`
+	UpdatedAt time.Time `json:"-"`
+	DeletedAt time.Time `json:"-"`
 }
 
 type CreateHotelResponse struct {

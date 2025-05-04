@@ -12,6 +12,5 @@ type TokenService interface {
 }
 
 type AuthService interface {
-	// return a token
 	Login(ctx *fiber.Ctx, username, password string) (string, error)
 }
