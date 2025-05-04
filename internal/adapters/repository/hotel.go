@@ -15,7 +15,7 @@ func NewHotelRepository(db *gorm.DB) *HotelRepository {
 }
 
 func (hr *HotelRepository) Create(hotel *domain.Hotel) error {
-	return nil
+	return hr.db.Create(hotel).Error
 }
 
 func (hr *HotelRepository) FindByID(id int) (*domain.Hotel, error) {

@@ -35,5 +35,5 @@ func (uh *UserHandler) Register(c *fiber.Ctx) error {
 
 	rsp := dto.CreateUserResponse{ID: user.ID, Username: user.Username, Role: user.Role, CreatedAt: user.CreatedAt, UpdatedAt: user.UpdatedAt}
 
-	return SuccessResponse(c, domain.CreatedUserMsg, rsp)
+	return SuccessResponse(c, domain.CreatedDataMsg, rsp)
 }

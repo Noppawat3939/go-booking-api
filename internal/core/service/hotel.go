@@ -15,7 +15,11 @@ func NewHotelService(repo port.HotelRepository) *HotelService {
 	return &HotelService{repo}
 }
 
-func (hs *HotelService) CreateHotel(ctx *fiber.Ctx, hotel *domain.Hotel) error {
+func (hs *HotelService) CreateHotel(hotel *domain.Hotel) error {
+	if err := hs.repo.Create(hotel); err != nil {
+		return err
+	}
+
 	return nil
 }
 

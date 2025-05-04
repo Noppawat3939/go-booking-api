@@ -1,6 +1,6 @@
 package domain
 
 const (
-	CreatedUserMsg = "created user is success"
+	CreatedDataMsg = "created data success"
 	InvalidBodyMsg = "invalid body request"
 )
