@@ -12,17 +12,15 @@ import (
 
 func HotelRouter(router fiber.Router, db *gorm.DB) {
 	// initialized Hotel
-	hotelRepo := repository.NewHotelRepository(db)
-	hotelService := service.NewHotelService(hotelRepo)
-	hotelHandler := http.NewHotelHandler(hotelService)
+	rp := repository.NewHotelRepository(db)
+	hs := service.NewHotelService(rp)
+	hh := http.NewHotelHandler(hs)
 
-	tokenService := service.NewTokenService()
+	ts := service.NewTokenService()
 
 	r := router.Group("/hotel")
 
-	r.Use(middleware.JwtMiddleware(tokenService))
-
-	r.Post("/", hotelHandler.CreateHotel)
-	r.Get("/", hotelHandler.GetHotels)
-	r.Get("/:id", hotelHandler.GetHotel)
+	r.Post("/", middleware.JwtMiddleware(ts), hh.CreateHotel)
+	r.Get("/", hh.GetHotels)
+	r.Get("/:id", hh.GetHotel)
 }

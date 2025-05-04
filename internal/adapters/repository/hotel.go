@@ -1,7 +1,6 @@
 package repository
 
 import (
-	"fmt"
 	"go_booking/internal/core/domain"
 
 	"gorm.io/gorm"
@@ -33,7 +32,6 @@ func (hr *HotelRepository) FindAll() ([]*domain.Hotel, error) {
 func (hr *HotelRepository) FindByID(id int) (*domain.Hotel, error) {
 	var hotel *domain.Hotel
 	res := hr.db.First(&hotel, id)
-	fmt.Print(res)
 
 	if res.Error != nil {
 		return nil, res.Error

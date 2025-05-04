@@ -3,7 +3,7 @@ package http
 import (
 	"go_booking/internal/adapters/handler/dto"
 	"go_booking/internal/adapters/mapper"
-	"go_booking/internal/core/domain"
+	d "go_booking/internal/core/domain"
 	"go_booking/internal/core/port"
 
 	"github.com/gofiber/fiber/v2"
@@ -21,7 +21,7 @@ func (uh *UserHandler) Register(c *fiber.Ctx) error {
 	var req dto.CreateUserRequest
 
 	if err := c.BodyParser(&req); err != nil {
-		return ErrorResponse(c, fiber.StatusBadRequest, domain.InvalidBodyMsg)
+		return ErrorResponse(c, fiber.StatusBadRequest, d.InvalidBodyMsg)
 	}
 
 	user := mapper.ToCreateUserReq(req)
@@ -30,7 +30,5 @@ func (uh *UserHandler) Register(c *fiber.Ctx) error {
 		return ErrorResponse(c, fiber.StatusConflict, err.Error())
 	}
 
-	rsp := mapper.ToCreateUserRes(&user)
-
-	return SuccessResponse(c, domain.CreatedDataMsg, rsp)
+	return SuccessResponse(c, d.CreatedDataMsg, mapper.ToCreateUserRes(&user))
 }

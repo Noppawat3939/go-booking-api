@@ -3,8 +3,6 @@ package service
 import (
 	"go_booking/internal/core/domain"
 	"go_booking/internal/core/port"
-
-	"github.com/gofiber/fiber/v2"
 )
 
 type HotelService struct {
@@ -23,7 +21,7 @@ func (hs *HotelService) CreateHotel(hotel *domain.Hotel) error {
 	return nil
 }
 
-func (hs *HotelService) FindAll(ctx *fiber.Ctx) ([]*domain.Hotel, error) {
+func (hs *HotelService) FindAll() ([]*domain.Hotel, error) {
 	hotels, err := hs.repo.FindAll()
 	if err != nil {
 		return nil, err

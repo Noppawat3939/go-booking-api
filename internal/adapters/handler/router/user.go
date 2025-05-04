@@ -11,17 +11,17 @@ import (
 
 func UserRouter(router fiber.Router, db *gorm.DB) {
 	// initialized User
-	userRepo := repository.NewUserRepository(db)
-	userService := service.NewUserService(userRepo)
-	userHandler := http.NewUserHandler(userService)
+	ur := repository.NewUserRepository(db)
+	us := service.NewUserService(ur)
+	uh := http.NewUserHandler(us)
 
 	// initialized Auth
-	tokenService := service.NewTokenService()
-	authService := service.NewAuthService(userRepo, tokenService)
-	authHandler := http.NewAuthHandler(authService)
+	ts := service.NewTokenService()
+	as := service.NewAuthService(ur, ts)
+	ah := http.NewAuthHandler(as)
 
 	r := router.Group("/user")
 
-	r.Post("/", userHandler.Register)
-	r.Post("/login", authHandler.Login)
+	r.Post("/", uh.Register)
+	r.Post("/login", ah.Login)
 }

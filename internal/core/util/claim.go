@@ -7,8 +7,9 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 )
 
+var secretKey = os.Getenv("JWT_SECRET")
+
 func CreateToken(payload map[string]interface{}, exp int) (string, error) {
-	secretKey := os.Getenv("JWT_SECRET")
 	t := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims(payload))
 	expiredTime := time.Now().Add(time.Duration(exp) * time.Hour).Unix()
 	t.Claims.(jwt.MapClaims)["exp"] = expiredTime
@@ -23,7 +24,6 @@ func CreateToken(payload map[string]interface{}, exp int) (string, error) {
 }
 
 func VerifyToken(tokenString string) (bool, error) {
-	secretKey := os.Getenv("JWT_SECRET")
 	token, err := jwt.Parse(tokenString, func(t *jwt.Token) (interface{}, error) {
 		return []byte(secretKey), nil
 	})
