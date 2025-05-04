@@ -1,3 +1,3 @@
 # Booking API
 
-<img src="docs/dbdiagram.png">
+<img src="screenshots/schema.png">
