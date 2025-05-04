@@ -23,10 +23,20 @@ func (hs *HotelService) CreateHotel(hotel *domain.Hotel) error {
 	return nil
 }
 
-func (hs *HotelService) FindOneByID(ctx *fiber.Ctx, id int) (*domain.Hotel, error) {
-	return nil, nil
+func (hs *HotelService) FindAll(ctx *fiber.Ctx) ([]*domain.Hotel, error) {
+	hotels, err := hs.repo.FindAll()
+	if err != nil {
+		return nil, err
+	}
+
+	return hotels, nil
 }
 
-func (hs *HotelService) FindAll(ctx *fiber.Ctx) ([]*domain.Hotel, error) {
-	return nil, nil
+func (hs *HotelService) FindOneByID(id int) (*domain.Hotel, error) {
+	hotel, err := hs.repo.FindByID(id)
+	if err != nil {
+		return nil, err
+	}
+
+	return hotel, nil
 }

@@ -5,6 +5,7 @@ import (
 	"go_booking/internal/adapters/mapper"
 	"go_booking/internal/core/domain"
 	"go_booking/internal/core/port"
+	"strconv"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -30,20 +31,36 @@ func (h *HotelHandler) CreateHotel(c *fiber.Ctx) error {
 		return ErrorResponse(c, fiber.StatusConflict, err.Error())
 	}
 
-	rsp := mapper.ToCreateHotelRes(hotel)
+	rsp := mapper.ToCreateHotelRes(&hotel)
 
 	return SuccessResponse(c, domain.CreatedDataMsg, rsp)
 }
 
-func (h *HotelHandler) GetHotel(ctx *fiber.Ctx) error {
-	return nil
-}
-
-func (h *HotelHandler) GetHotels(ctx *fiber.Ctx) error {
-	hotels, err := h.svc.FindAll(ctx)
+func (h *HotelHandler) GetHotels(c *fiber.Ctx) error {
+	hotels, err := h.svc.FindAll(c)
 	if err != nil {
-		return ErrorResponse(ctx, fiber.StatusNotFound, "")
+		return ErrorResponse(c, fiber.StatusNotFound, domain.DataNotFoundMsg)
 	}
 
-	return SuccessResponse(ctx, "", hotels)
+	rsp := mapper.ToListHotelRes(hotels)
+
+	return SuccessResponse(c, domain.GettedDataMsg, rsp)
+}
+
+func (h *HotelHandler) GetHotel(c *fiber.Ctx) error {
+	id, err := strconv.Atoi(c.Params("id"))
+
+	if err != nil {
+		return ErrorResponse(c, fiber.StatusConflict, domain.ErrConflict.Error())
+	}
+
+	hotel, err := h.svc.FindOneByID(id)
+
+	if err != nil {
+		return ErrorResponse(c, fiber.StatusNotFound, domain.DataNotFoundMsg)
+	}
+
+	rsp := mapper.ToHotelRes(hotel)
+
+	return SuccessResponse(c, domain.GettedDataMsg, rsp)
 }

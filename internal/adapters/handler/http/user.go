@@ -2,6 +2,7 @@ package http
 
 import (
 	"go_booking/internal/adapters/handler/dto"
+	"go_booking/internal/adapters/mapper"
 	"go_booking/internal/core/domain"
 	"go_booking/internal/core/port"
 
@@ -23,17 +24,13 @@ func (uh *UserHandler) Register(c *fiber.Ctx) error {
 		return ErrorResponse(c, fiber.StatusBadRequest, domain.InvalidBodyMsg)
 	}
 
-	user := domain.User{
-		Username: req.Username,
-		Password: req.Password,
-		Role:     req.Role,
-	}
+	user := mapper.ToCreateUserReq(req)
 
 	if err := uh.svc.Register(c, &user); err != nil {
 		return ErrorResponse(c, fiber.StatusConflict, err.Error())
 	}
 
-	rsp := dto.CreateUserResponse{ID: user.ID, Username: user.Username, Role: user.Role, CreatedAt: user.CreatedAt, UpdatedAt: user.UpdatedAt}
+	rsp := mapper.ToCreateUserRes(&user)
 
 	return SuccessResponse(c, domain.CreatedDataMsg, rsp)
 }

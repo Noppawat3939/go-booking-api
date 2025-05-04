@@ -14,6 +14,6 @@ type HotelRepository interface {
 
 type HotelService interface {
 	CreateHotel(hotel *domain.Hotel) error
-	FindOneByID(ctx *fiber.Ctx, id int) (*domain.Hotel, error)
+	FindOneByID(id int) (*domain.Hotel, error)
 	FindAll(ctx *fiber.Ctx) ([]*domain.Hotel, error)
 }
