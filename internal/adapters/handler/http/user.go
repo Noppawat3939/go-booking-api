@@ -20,7 +20,7 @@ func (uh *UserHandler) Register(c *fiber.Ctx) error {
 	var req dto.CreateUserRequest
 
 	if err := c.BodyParser(&req); err != nil {
-		return ErrorResponse(c, fiber.StatusBadRequest, "invalid body request")
+		return ErrorResponse(c, fiber.StatusBadRequest, domain.InvalidBodyMsg)
 	}
 
 	user := domain.User{
@@ -35,5 +35,5 @@ func (uh *UserHandler) Register(c *fiber.Ctx) error {
 
 	rsp := dto.CreateUserResponse{ID: user.ID, Username: user.Username, Role: user.Role, CreatedAt: user.CreatedAt, UpdatedAt: user.UpdatedAt}
 
-	return SuccessResponse(c, "create new user", rsp)
+	return SuccessResponse(c, domain.CreatedUserMsg, rsp)
 }
