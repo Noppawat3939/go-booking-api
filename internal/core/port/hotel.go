@@ -8,10 +8,12 @@ type HotelRepository interface {
 	Create(hotel *domain.Hotel) error
 	FindByID(id int) (*domain.Hotel, error)
 	FindAll() ([]*domain.Hotel, error)
+	UpdateByID(id int, hotel *domain.Hotel) (*domain.Hotel, error)
 }
 
 type HotelService interface {
 	CreateHotel(hotel *domain.Hotel) error
 	FindOneByID(id int) (*domain.Hotel, error)
 	FindAll() ([]*domain.Hotel, error)
+	UpdateByID(id int, hotel *domain.Hotel) (*domain.Hotel, error)
 }

@@ -39,3 +39,7 @@ func (hr *HotelRepository) FindByID(id int) (*domain.Hotel, error) {
 
 	return hotel, nil
 }
+
+func (hr *HotelRepository) UpdateByID(id int, hotel *domain.Hotel) (*domain.Hotel, error) {
+	return nil, nil
+}

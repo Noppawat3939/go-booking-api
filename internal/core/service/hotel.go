@@ -38,3 +38,7 @@ func (hs *HotelService) FindOneByID(id int) (*domain.Hotel, error) {
 
 	return hotel, nil
 }
+
+func (hs *HotelService) UpdateByID(id int, hotel *domain.Hotel) (*domain.Hotel, error) {
+	return nil, nil
+}
