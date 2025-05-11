@@ -1,9 +1,10 @@
 package domain
 
 const (
-	CreatedDataMsg   = "created data success"
+	CreatedDataMsg   = "created success"
+	UpdatedDataMsg   = "updated success"
 	InvalidBodyMsg   = "invalid body request"
-	GettedDataMsg    = "getted data success"
+	GettedDataMsg    = "getted success"
 	DataNotFoundMsg  = "data not found"
 	UnAuthrorizedMsg = "user unauthorized"
 )

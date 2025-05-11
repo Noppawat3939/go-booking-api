@@ -42,3 +42,11 @@ type CreateHotelResponse struct {
 	Email       string `json:"email"`
 	Website     string `json:"website"`
 }
+
+type UpdateHotelRequest struct {
+	Hotel
+	ID        int       `json:"-"` //omit
+	CreatedAt time.Time `json:"-"`
+	UpdatedAt time.Time `json:"-"`
+	DeletedAt time.Time `json:"-"`
+}

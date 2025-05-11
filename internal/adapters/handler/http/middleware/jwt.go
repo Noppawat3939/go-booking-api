@@ -10,30 +10,30 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-const (
-	authType      = "Bearer"
-	authHeaderKey = "Authorization"
-)
-
 func JwtMiddleware(ts port.TokenService) fiber.Handler {
+	const (
+		authType      = "Bearer"
+		authHeaderKey = "Authorization"
+	)
+
 	return func(c *fiber.Ctx) error {
 		authHeader := c.Get(authHeaderKey)
 
 		if authHeader == "" {
-			errorUnAuthorized(c)
+			return errorUnAuthorized(c)
 		}
 
 		splitted := strings.Split(authHeader, " ")
 
 		if len(splitted) != 2 || splitted[0] != authType {
-			errorUnAuthorized(c)
+			return errorUnAuthorized(c)
 		}
 
 		token := splitted[1]
 		ok, claims, err := ts.VerifyToken(token)
 
 		if err != nil || !ok {
-			errorUnAuthorized(c)
+			return errorUnAuthorized(c)
 		}
 
 		userID := fmt.Sprintf("%v", claims["id"])

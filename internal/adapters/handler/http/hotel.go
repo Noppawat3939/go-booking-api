@@ -58,3 +58,27 @@ func (h *HotelHandler) GetHotel(c *fiber.Ctx) error {
 
 	return SuccessResponse(c, d.GettedDataMsg, mapper.ToHotelRes(hotel))
 }
+
+func (h *HotelHandler) UpdateByID(c *fiber.Ctx) error {
+	id, err := strconv.Atoi(c.Params("id"))
+
+	if err != nil {
+		return ErrorResponse(c, fiber.StatusConflict, d.ErrConflict.Error())
+	}
+
+	var req dto.UpdateHotelRequest
+
+	if err := c.BodyParser(&req); err != nil {
+		return ErrorResponse(c, fiber.StatusBadRequest, d.InvalidBodyMsg)
+	}
+
+	hotel := mapper.ToUpdateHotelReq(req)
+
+	err = h.svc.UpdateByID(id, &hotel)
+
+	if err != nil {
+		return ErrorResponse(c, fiber.StatusNotFound, d.ErrConflict.Error())
+	}
+
+	return SuccessResponse(c, d.UpdatedDataMsg, nil)
+}

@@ -20,7 +20,10 @@ func HotelRouter(router fiber.Router, db *gorm.DB) {
 
 	r := router.Group("/hotel")
 
-	r.Post("/", middleware.JwtMiddleware(ts), hh.CreateHotel)
+	auth := r.Group("/", middleware.JwtMiddleware(ts))
+	auth.Post("/", hh.CreateHotel)
+	auth.Patch("/:id", hh.UpdateByID)
+
 	r.Get("/", hh.GetHotels)
 	r.Get("/:id", hh.GetHotel)
 }

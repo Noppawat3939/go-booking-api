@@ -78,3 +78,19 @@ func ToHotelRes(h *domain.Hotel) dto.Hotel {
 		UpdatedAt:   h.UpdatedAt,
 	}
 }
+
+func ToUpdateHotelReq(r dto.UpdateHotelRequest) domain.Hotel {
+	return domain.Hotel{
+		Name:        r.Name,
+		Description: r.Description,
+		Address:     r.Address,
+		City:        r.City,
+		State:       r.State,
+		Country:     r.Country,
+		PostCode:    r.PostCode,
+		PhoneNumber: r.PhoneNumber,
+		Email:       r.Email,
+		Website:     r.Website,
+		Active:      true,
+	}
+}
