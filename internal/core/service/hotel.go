@@ -40,9 +40,7 @@ func (hs *HotelService) FindOneByID(id int) (*domain.Hotel, error) {
 }
 
 func (hs *HotelService) UpdateByID(id int, hotel *domain.Hotel) error {
-	err := hs.repo.UpdateByID(id, hotel)
-
-	if err != nil {
+	if err := hs.repo.UpdateByID(id, hotel); err != nil {
 		return err
 	}
 
