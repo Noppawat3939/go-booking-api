@@ -21,5 +21,6 @@ func GetPaginationParams(c *fiber.Ctx) (page, limit, offset int) {
 	}
 
 	offset = (page - 1) * limit
-	return
+
+	return page, limit, offset
 }
