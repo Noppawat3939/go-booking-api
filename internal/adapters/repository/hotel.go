@@ -18,9 +18,9 @@ func (hr *HotelRepository) Create(hotel *domain.Hotel) error {
 	return hr.db.Create(hotel).Error
 }
 
-func (hr *HotelRepository) FindAll() ([]*domain.Hotel, error) {
+func (hr *HotelRepository) FindAll(limit, offset int) ([]*domain.Hotel, error) {
 	var hotels []*domain.Hotel
-	res := hr.db.Where("active = ?", true).Find(&hotels)
+	res := hr.db.Where("active = ?", true).Limit(limit).Offset(offset).Find(&hotels)
 
 	if res.Error != nil {
 		return nil, res.Error

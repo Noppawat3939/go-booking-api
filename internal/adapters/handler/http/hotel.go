@@ -5,6 +5,7 @@ import (
 	"go_booking/internal/adapters/mapper"
 	d "go_booking/internal/core/domain"
 	"go_booking/internal/core/port"
+	"go_booking/internal/core/util"
 	"strconv"
 
 	"github.com/gofiber/fiber/v2"
@@ -35,7 +36,9 @@ func (h *HotelHandler) CreateHotel(c *fiber.Ctx) error {
 }
 
 func (h *HotelHandler) GetHotels(c *fiber.Ctx) error {
-	hotels, err := h.svc.FindAll()
+	_, limit, offset := util.GetPaginationParams(c)
+
+	hotels, err := h.svc.FindAll(limit, offset)
 	if err != nil {
 		return ErrorResponse(c, fiber.StatusNotFound, d.DataNotFoundMsg)
 	}

@@ -21,8 +21,8 @@ func (hs *HotelService) CreateHotel(hotel *domain.Hotel) error {
 	return nil
 }
 
-func (hs *HotelService) FindAll() ([]*domain.Hotel, error) {
-	hotels, err := hs.repo.FindAll()
+func (hs *HotelService) FindAll(skip, limit int) ([]*domain.Hotel, error) {
+	hotels, err := hs.repo.FindAll(skip, limit)
 	if err != nil {
 		return nil, err
 	}
