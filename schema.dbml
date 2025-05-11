@@ -25,11 +25,22 @@ Table hotels {
  updated_at timestamp
 }
 
-Table hotel_facilities {
+Table rooms {
   id integer [primary key]
-  hotel_id integer
-  wifi bool
-  break_fast bool
+  hotel_id int
+  name text
+  type text [note: 'single, double, deluxe'] // Single: One bed for one person, Double: One large bed or two single beds for two people, Deluxe: More spacious, with premium amenities
+  price float
+  discount float
+  active bool
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table room_facilities {
+  id integer [primary key]
+  room_id int
+  values text [note: 'wifi, break_fast']
 }
 
 Table booking_hotels {
@@ -43,6 +54,7 @@ Table booking_hotels {
 }
 
 
-Ref hotels_facilities: hotel_facilities.hotel_id > hotels.id // n-n
 Ref: booking_hotels.hotel_id > hotels.id
 Ref: booking_hotels.user_id > users.id
+Ref rooms: rooms.hotel_id > hotels.id // n-n
+Ref room_facilities: room_facilities.room_id > rooms.id // n-n
