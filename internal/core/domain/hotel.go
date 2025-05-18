@@ -16,11 +16,3 @@ type Hotel struct {
 	Website     string `gorm:"not null"`
 	Active      bool   `gorm:"default:true"`
 }
-
-type HotelFacility struct {
-	ID        uint `gorm:"primaryKey"`
-	HotelID   int
-	Wifi      bool  `gorm:"default:false"`
-	BreakFast bool  `gorm:"default:false"`
-	Hotel     Hotel `gorm:"foreignkey:HotelID;association_foreignkey:ID"`
-}
