@@ -10,6 +10,7 @@ import (
 
 	"github.com/gofiber/contrib/swagger"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 )
 
 func init() {
@@ -20,6 +21,10 @@ func main() {
 	db, _ := db.ConnectDB()
 
 	app := fiber.New()
+	app.Use(cors.New(cors.Config{
+		AllowMethods: "GET,POST,PATCH",
+		AllowHeaders: "Content-Type,Authorization",
+	}))
 
 	app.Use(swagger.New(cfg.Swagger()))
 	router.InitialRoutes(app, db)
