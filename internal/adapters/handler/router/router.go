@@ -9,6 +9,6 @@ func InitialRoutes(app *fiber.App, db *gorm.DB) {
 	api := app.Group("/api")
 	v1 := api.Group("/v1")
 
-	UserRouter(v1, db)
+	// UserRouter(v1, db)
 	HotelRouter(v1, db)
 }

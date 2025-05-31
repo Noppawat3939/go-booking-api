@@ -1,10 +1,9 @@
 package main
 
 import (
-	cfg "go_booking/cmd/config"
-	"go_booking/internal/adapters/handler/router"
+	"go_booking/cmd/config"
 	"go_booking/internal/db"
-
+	"go_booking/internal/routes"
 	"log"
 	"os"
 
@@ -14,7 +13,7 @@ import (
 )
 
 func init() {
-	cfg.LoadEnv()
+	config.LoadEnv()
 }
 
 func main() {
@@ -23,12 +22,12 @@ func main() {
 	app := fiber.New()
 	app.Use(cors.New(cors.Config{
 		AllowMethods: "GET,POST,PATCH",
-		AllowHeaders: "Content-Type,Authorization",
+		AllowHeaders: "Content-Type",
 	}))
 
-	app.Use(swagger.New(cfg.Swagger()))
-	router.InitialRoutes(app, db)
+	routes.NewRoutes(app, db)
 
+	app.Use(swagger.New(config.Swagger()))
 	port := os.Getenv("PORT")
 
 	if port == "" {
