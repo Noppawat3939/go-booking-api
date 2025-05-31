@@ -31,3 +31,12 @@ func (us *UserService) Register(c *fiber.Ctx, user *domain.User) error {
 
 	return nil
 }
+
+func (us *UserService) GetUser(id int) (*domain.User, error) {
+	user, err := us.repo.FindOneByID(id)
+	if err != nil {
+		return nil, err
+	}
+
+	return user, nil
+}

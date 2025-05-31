@@ -7,9 +7,9 @@ import (
 )
 
 func GetUserIDFromContext(c *fiber.Ctx) (string, bool) {
-	userID, ok := c.Locals(constants.ContextUserID).(string)
+	userId, ok := c.Locals(constants.ContextUserID).(string)
 
-	return userID, ok
+	return userId, ok
 }
 
 func GetPaginationParams(c *fiber.Ctx) (page, limit, offset int) {

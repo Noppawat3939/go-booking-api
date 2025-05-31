@@ -2,6 +2,7 @@ package router
 
 import (
 	"go_booking/internal/adapters/handler/http"
+	"go_booking/internal/adapters/handler/http/middleware"
 	"go_booking/internal/adapters/repository"
 	"go_booking/internal/core/service"
 
@@ -22,6 +23,7 @@ func UserRouter(router fiber.Router, db *gorm.DB) {
 
 	r := router.Group("/user")
 
-	r.Post("/", uh.Register)
+	r.Post("/register", uh.Register)
 	r.Post("/login", ah.Login)
+	r.Post("", middleware.JwtMiddleware(ts), uh.GetUser)
 }

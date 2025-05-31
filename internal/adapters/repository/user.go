@@ -29,3 +29,15 @@ func (ur *UserRepository) FindByUsername(username string) (*domain.User, error) 
 
 	return user, nil
 }
+
+func (ur *UserRepository) FindOneByID(id string) (*domain.User, error) {
+	var user *domain.User
+	res := ur.db.Where("id = ?", id).First(&user)
+
+	if res.Error != nil {
+		return nil, res.Error
+	}
+
+	return user, nil
+
+}

@@ -5,6 +5,8 @@ import (
 	"go_booking/internal/adapters/mapper"
 	d "go_booking/internal/core/domain"
 	"go_booking/internal/core/port"
+	"go_booking/internal/core/util"
+	"strconv"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -31,4 +33,23 @@ func (uh *UserHandler) Register(c *fiber.Ctx) error {
 	}
 
 	return SuccessResponse(c, d.CreatedDataMsg, mapper.ToCreateUserRes(&user))
+}
+
+func (uh *UserHandler) GetUser(c *fiber.Ctx) error {
+
+	userId, err := util.GetUserIDFromContext(c)
+
+	if err {
+		return ErrorResponse(c, fiber.StatusConflict, "user not found")
+	}
+
+	id, _ := strconv.Atoi(userId)
+
+	_, e := uh.svc.GetUser(id)
+
+	if e != nil {
+		return ErrorResponse(c, fiber.StatusConflict, e.Error())
+	}
+
+	return SuccessResponse(c, "sss", nil)
 }
