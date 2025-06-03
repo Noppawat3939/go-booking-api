@@ -9,7 +9,7 @@ type UserRepository interface {
 }
 
 type UserService interface {
-	Register(email, password string) error
+	Register(user *model.User) error
 	Login(username, password string) (string, error)
 	GetUserByID(userID string) (*model.User, error)
 }
