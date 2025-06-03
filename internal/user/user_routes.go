@@ -1,6 +1,7 @@
 package user
 
 import (
+	"go_booking/internal/middleware"
 	"go_booking/internal/user/handler"
 	"go_booking/internal/user/repository"
 	"go_booking/internal/user/service"
@@ -19,7 +20,7 @@ func RegisterUserRoutes(router fiber.Router, db *gorm.DB) {
 
 	r := router.Group("user")
 
-	r.Post("/", handler.GetUser)
+	r.Post("/", middleware.JwtBearerMiddleware(tokenSvc), handler.GetUser)
 	r.Post("/register", handler.Register)
 	r.Post("/login", handler.Login)
 }

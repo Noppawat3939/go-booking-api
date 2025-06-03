@@ -7,12 +7,12 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-type LoginRequest struct {
+type loginReq struct {
 	Username string `json:"username"`
 	Password string `json:"password"`
 }
 
-type RegisterRequest struct {
+type registerReq struct {
 	Username string `json:"username"`
 	Password string `json:"password"`
 	Role     string `json:"role"`
@@ -28,7 +28,7 @@ func NewUserHandler(svc port.UserService) *userHandler {
 }
 
 func (h *userHandler) Register(c *fiber.Ctx) error {
-	var req RegisterRequest
+	var req registerReq
 
 	if err := c.BodyParser(&req); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"message": "invalid body", "success": false})
@@ -37,6 +37,7 @@ func (h *userHandler) Register(c *fiber.Ctx) error {
 	user := model.User{
 		Username: req.Username,
 		Password: req.Password,
+		Role:     req.Role,
 		Active:   req.Active,
 	}
 
@@ -46,12 +47,12 @@ func (h *userHandler) Register(c *fiber.Ctx) error {
 
 	return c.JSON(fiber.Map{
 		"success": true,
-		"message": "register",
+		"message": "created new user",
 	})
 }
 
 func (h *userHandler) Login(c *fiber.Ctx) error {
-	var req LoginRequest
+	var req loginReq
 
 	if err := c.BodyParser(&req); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"message": "invalid body", "success": false})
@@ -63,13 +64,21 @@ func (h *userHandler) Login(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"message": err.Error(), "success": false})
 	}
 
-	return c.JSON(fiber.Map{"access_token": token})
+	return c.JSON(fiber.Map{"success": true, "data": fiber.Map{"access_token": token}})
 }
 
 func (h *userHandler) GetUser(c *fiber.Ctx) error {
+	id, _ := c.Locals("user_id").(string)
+
+	user, err := h.svc.GetUserByID(id)
+
+	if err != nil {
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"message": "user not found", "success": true})
+	}
 
 	return c.JSON(fiber.Map{
 		"success": true,
-		"message": "get user",
+		"message": nil,
+		"data":    user,
 	})
 }

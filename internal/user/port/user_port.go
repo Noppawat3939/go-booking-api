@@ -11,5 +11,5 @@ type UserRepository interface {
 type UserService interface {
 	Register(user *model.User) error
 	Login(username, password string) (string, error)
-	GetUserByID(userID string) (*model.User, error)
+	GetUserByID(id string) (*model.UserResponse, error)
 }

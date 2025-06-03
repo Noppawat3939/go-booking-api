@@ -50,8 +50,15 @@ func (s *userService) Login(username, password string) (string, error) {
 	return t, nil
 }
 
-func (r *userService) GetUserByID(userID string) (*model.User, error) {
-	return nil, nil
+func (r *userService) GetUserByID(id string) (*model.UserResponse, error) {
+	u, err := r.repo.FindByID(id)
+	if err != nil {
+		return nil, err
+	}
+
+	user := toDto(u)
+
+	return user, nil
 }
 
 func comparePassword(hashed, pw string) error {
@@ -66,4 +73,14 @@ func hashPassword(password string) (string, error) {
 	}
 
 	return string(hashedPassword), nil
+}
+
+func toDto(u *model.User) *model.UserResponse {
+	return &model.UserResponse{
+		ID:        u.ID,
+		Username:  u.Username,
+		Role:      u.Role,
+		CreatedAt: u.CreatedAt,
+		UpdatedAt: u.UpdatedAt,
+	}
 }
