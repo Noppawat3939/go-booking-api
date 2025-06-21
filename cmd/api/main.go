@@ -21,8 +21,10 @@ func main() {
 
 	app := fiber.New()
 	app.Use(cors.New(cors.Config{
-		AllowMethods: "GET,POST,PATCH",
-		AllowHeaders: "Content-Type",
+		AllowHeaders:     "Content-Type, authorization",
+		AllowMethods:     "GET,POST,PATCH",
+		AllowCredentials: true,
+		AllowOrigins:     "http://localhost:3000",
 	}))
 
 	routes.NewRoutes(app, db)
